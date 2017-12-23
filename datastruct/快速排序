@@ -1,0 +1,46 @@
+#include <iostream>
+using namespace std;
+int QKpss(int r[],int low,int high)
+{
+    r[0]=r[low];
+    while(low<high)
+    {
+       while(low<high&&r[high]>=r[0])
+            high--;
+       if(low<high)
+            r[low]=r[high];
+       while(low<high&&r[low]<r[0])
+            low--;
+       if(low<high)
+            r[high]=r[low];
+    }
+    r[low]=r[0];
+    return low;
+}
+void QKSort(int r[],int low,int high)
+{
+    int p;
+    if(low<high)
+    {
+        p=QKpss(r,low,high);
+        QKSort(r,p+1,high);
+        QKSort(r,low,p-1);
+    }
+}
+int main()
+{
+    int a[1000];
+    int n,i;
+    cin>>n;
+    for(i=1;i<=n;i++)
+    {
+        cin>>a[i];
+    }
+    QKSort(a,1,n);
+    for(i=1;i<=n;i++)
+    {
+        cout<<a[i]<<" ";
+    }
+    cout<<endl;
+    return 0;
+}
